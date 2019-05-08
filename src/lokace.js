@@ -10,9 +10,9 @@ export default function getLocation(callback){
             lon = position.coords.longitude;
             
             console.log(position.coords.latitude, position.coords.longitude); 
-            console.log(`?lat=${lat}&lon=${lat}`);
+            console.log(`?lat=${lat}&lon=${lon}`);
 
-            return `?lat=${lat}&lon=${lat}`;
+            return `?lat=${lat}&lon=${lon}`;
         });
     } else {
         console.log ("Smůla");

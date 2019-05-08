@@ -1,10 +1,7 @@
-
-//export default function showWeather(){
-const apiKey = "c62889b42e57bd437b92dfd0d7be83bc";
-const aktualniUrl = "https://api.openweathermap.org/data/2.5/weather";
-
 import getWeatherIcon from './weather-icons';
 import getLocation from './lokace';
+import {apiKey } from './api';
+import {aktualniUrl} from './api';
 
 let location = "Brno";
 //location = getLocation();
@@ -13,7 +10,6 @@ let location = "Brno";
 
 export default class Pocasi {
         constructor(){
-    
         }  
 
     getWeather(){
@@ -45,9 +41,6 @@ export default class Pocasi {
         document.querySelector("#vitr").textContent = data.wind.speed;
         document.querySelector("#vychod").textContent =  hodinyRise + "h " + minutyRise + "min";
         document.querySelector("#zapad").textContent = hodinySet + "h " + minutySet + "min";
-
-        //let id = data.weather[0].id;
-
     }     
     
 }
