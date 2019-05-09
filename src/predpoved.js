@@ -19,10 +19,9 @@ export default class Predpoved {
     }
 
     dnes(){
-        let today = new Date(); // vytvoří proměnnou obsahující aktuální datum
-        let mesic = today.getMonth() + 1;//leden je 0
-        let denVMesici = today.getDate();
-        today = denVMesici + ". " + mesic + ".";
+       // let today = new Date(); // vytvoří proměnnou obsahující aktuální datum
+        let denVMesici = new Date().getDate();
+        today = denVMesici;
         console.log(today);
         return today;
     }
