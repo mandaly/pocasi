@@ -14,31 +14,50 @@ export default class Predpoved {
         fetch(`${forecastUrl}?APPID=${apiKey}&q=${location}&units=metric&lang=cz`)
             .then(response => response.json())
             .then(data => {
-                this.displayForecast(data);       
+                this.getForecastDate(data);       
         })
     }
 
-    dnes(){
-       // let today = new Date(); // vytvoří proměnnou obsahující aktuální datum
-        let denVMesici = new Date().getDate();
-        today = denVMesici;
-        console.log(today);
-        return today;
+    getForecastDate(data){
+        console.log(data.filter(filterDate));
+    }
+    
+    
+
+    filterDate(data){
+        let dnes = new Date().getDate();
+        let datum = new Date(data.dt * 1000).getDate();
+        let novePole = [];
+
+        if(datum == dnes + 1){
+            novePole.push(data);
+        };
+        console.log(novePole);
+        return novePole;
     }
 
+    filterTemperature(data){
+        //console.log(Math.max(data.list[0].main.temp));
+        return Math.max(data.list[0].main.temp);
+    }
+
+    
+
+
     displayForecast(data){
-        console.log(data);
+        
         let predpoved = document.querySelector("#predpoved");
         let html = "";
 
-        this.dnes();
+        data.filter(filterDate);
         
         data.list.forEach(den => {
             
-            let novaIkona = getWeatherIcon(den.weather[0].id, den.weather[0].icon);
             let datum = new Date(den.dt * 1000).getDate();
-            let mesic = new Date(den.dt * 1000).getMonth()+1;
             let jmenoDne = new Date(den.dt * 1000).getDay();
+            let dnes = new Date().getDate();
+
+            console.log(datum == dnes + 1)
 
             if(jmenoDne == 0){
                 jmenoDne = "neděle";
@@ -56,21 +75,23 @@ export default class Predpoved {
                 jmenoDne = "sobota"
             }
 
-            html += `
-            <div class="forecast">
-                <div class="forecast__day">
-                    ${jmenoDne} ${datum}. ${mesic}.
-                <!-- den v týdnu a datum, např.: Pondělí 22.4. -->
-                </div>
-                
-                <div class="forecast__icon">
-                    <i class="wi wi-sunny-day">${novaIkona}</i>
-                </div>
-                
-                <div class="forecast__temp">
-                    ${den.main.temp} °C
-                </div>
-          </div>`
+            if(datum !== dnes){
+                html += `
+                <div class="forecast">
+                    <div class="forecast__day">
+                        ${jmenoDne} ${datum}. ${new Date(den.dt * 1000).getMonth()+1}.
+                    </div>
+                    
+                    <div class="forecast__icon">
+                        <i class="wi wi-sunny-day">${getWeatherIcon(den.weather[0].id, den.weather[0].icon)}</i>
+                    </div>
+                    
+                    <div class="forecast__temp">
+                        ${den.main.temp} °C
+                    </div>
+                 </div>`
+            }
+            
         });
 
         predpoved.innerHTML = html;
