@@ -4,20 +4,22 @@ import {apiKey } from './api';
 import {aktualniUrl} from './api';
 
 let location = "Brno";
+let city = "";
 
 //console.log(`${aktualniUrl}?APPID=${apiKey}&q=${location}&units=metric&lang=cz`);
 //location = `?lat=${lat}&lon=${lon}`
 getLocation(function (lokace) {
-    lokace = `?lat=${lokace.coords.latitude}&lon=${lokace.coords.longitude}`;
-    location = lokace;  
+    location = `?lat=${lokace.coords.latitude}&lon=${lokace.coords.longitude}`;
+    if (Math.floor(lokace.coords.latitude) == 49 && Math.floor(lokace.coords.longitude) == 16){
+        city = "Brno";
+    }
 });
 
 export default class Pocasi {
         constructor(){
-        }     
+        }  
 
     getWeather(){
-        
         //získáme data o počasí
         fetch(`${aktualniUrl}?APPID=${apiKey}&q=${location}&units=metric&lang=cz`)
             .then(response => response.json())
@@ -27,7 +29,7 @@ export default class Pocasi {
     }
 
     displayWeather(data){
-        document.querySelector("#mesto").textContent = location;
+        document.querySelector("#mesto").textContent = city;
 
         let novaIkona = getWeatherIcon(data.weather[0].id, data.weather[0].icon);
         let ikonaElement = document.querySelector('#ikona');
