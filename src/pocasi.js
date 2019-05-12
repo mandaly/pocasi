@@ -7,12 +7,17 @@ let location = "Brno";
 
 //console.log(`${aktualniUrl}?APPID=${apiKey}&q=${location}&units=metric&lang=cz`);
 //location = `?lat=${lat}&lon=${lon}`
+getLocation(function (lokace) {
+    lokace = `?lat=${lokace.coords.latitude}&lon=${lokace.coords.longitude}`;
+    location = lokace;  
+});
 
 export default class Pocasi {
         constructor(){
-        }  
+        }     
 
     getWeather(){
+        
         //získáme data o počasí
         fetch(`${aktualniUrl}?APPID=${apiKey}&q=${location}&units=metric&lang=cz`)
             .then(response => response.json())

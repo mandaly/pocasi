@@ -65,10 +65,8 @@ export default class Predpoved {
                 }
             })    
 
-        return novePole;
-                
+        return novePole;         
     }
-
     
     displayForecast(data){
          
