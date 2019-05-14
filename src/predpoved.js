@@ -19,6 +19,26 @@ export default class Predpoved {
     }
 
     filterDate(data){
+        /*fetch(url)
+  .then(res => res.json())
+  .then(data => {
+
+    let teploty = {};
+
+    data.list.forEach(den => {
+
+      let d = new Date(den.dt * 1000).getDate();
+      let m = new Date(den.dt * 1000).getMonth();
+
+      let datum = ('00' + m).slice(-2) + '/' + ('00' + d).slice(-2);
+
+      teploty[datum] = Math.max(teploty[datum] || -Infinity, den.main.temp);
+
+    });
+
+    console.table(teploty);
+
+  });*/
         let dnes = new Date().getDate();
         let novePole = [];
         let novePoleTemp1 = [];
@@ -30,19 +50,13 @@ export default class Predpoved {
                 let datum = new Date(den.dt * 1000).getDate();
                     if(datum == dnes+1){
                         novePoleTemp1.push(den.main.temp); 
-                    }
-
-                    else if(datum == dnes+2){
+                    } else if(datum == dnes+2){
                         //novePole.push(den.main.temp);
                         novePoleTemp2.push(den.main.temp); 
-                    }
-
-                    else if(datum == dnes+3){
+                    } else if(datum == dnes+3){
                         //novePole.push(den.main.temp);
                         novePoleTemp3.push(den.main.temp); 
-                    }
-
-                    else if(datum == dnes+4){
+                    } else if(datum == dnes+4){
                         //novePole.push(den.main.temp);
                         novePoleTemp4.push(den.main.temp); 
                     };

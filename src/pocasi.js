@@ -1,27 +1,17 @@
 import getWeatherIcon from './weather-icons';
-import getLocation from './lokace';
 import {apiKey } from './api';
 import {aktualniUrl} from './api';
 
-let location = "Brno";
-let city = "";
-
-//console.log(`${aktualniUrl}?APPID=${apiKey}&q=${location}&units=metric&lang=cz`);
-//location = `?lat=${lat}&lon=${lon}`
-getLocation(function (lokace) {
-    location = `?lat=${lokace.coords.latitude}&lon=${lokace.coords.longitude}`;
-    if (Math.floor(lokace.coords.latitude) == 49 && Math.floor(lokace.coords.longitude) == 16){
-        city = "Brno";
-    }
-});
+let city = "Brno";
 
 export default class Pocasi {
-        constructor(){
+        constructor(lokace){
+            this.location = lokace;
         }  
 
     getWeather(){
         //získáme data o počasí
-        fetch(`${aktualniUrl}?APPID=${apiKey}&q=${location}&units=metric&lang=cz`)
+        fetch(`${aktualniUrl}?APPID=${apiKey}&q=${this.location}&units=metric&lang=cz`)
             .then(response => response.json())
             .then(data => {
                 this.displayWeather(data);    
