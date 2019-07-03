@@ -9,9 +9,10 @@ export default class Pocasi {
             this.location = lokace;
         }  
 
-    getWeather(){
+    getWeather(location){
+        
         //získáme data o počasí
-        fetch(`${aktualniUrl}?APPID=${apiKey}&q=${this.location}&units=metric&lang=cz`)
+        fetch(`${aktualniUrl}?APPID=${apiKey}&q=${location}&units=metric&lang=cz`)
             .then(response => response.json())
             .then(data => {
                 this.displayWeather(data);    

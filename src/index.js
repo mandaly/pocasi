@@ -13,7 +13,7 @@ getLocation(function (lokace) {
     location = `?lat=${lokace.coords.latitude}&lon=${lokace.coords.longitude}`;
     
     pocasi.getWeather(location);
-    predpoved.getForecast();
+    predpoved.getForecast(location);
 });
 
 

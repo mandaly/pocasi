@@ -1,15 +1,12 @@
 import {apiKey } from './api';
 import {forecastUrl } from './api';
-import getWeatherIcon from './weather-icons';
-
-let location = "Brno";
 
 export default class Predpoved {
     constructor(){
 
     }  
 
-    getForecast(){
+    getForecast(location){
         //získáme data o počasí
         fetch(`${forecastUrl}?APPID=${apiKey}&q=${location}&units=metric&lang=cz`)
             .then(response => response.json())
@@ -19,67 +16,19 @@ export default class Predpoved {
     }
 
     filterDate(data){
-        /*fetch(url)
-  .then(res => res.json())
-  .then(data => {
-
-    let teploty = {};
-
-    data.list.forEach(den => {
-
-      let d = new Date(den.dt * 1000).getDate();
-      let m = new Date(den.dt * 1000).getMonth();
-
-      let datum = ('00' + m).slice(-2) + '/' + ('00' + d).slice(-2);
-
-      teploty[datum] = Math.max(teploty[datum] || -Infinity, den.main.temp);
-
-    });
-
-    console.table(teploty);
-
-  });*/
-        let dnes = new Date().getDate();
-        let novePole = [];
-        let novePoleTemp1 = [];
-        let novePoleTemp2 = [];
-        let novePoleTemp3 = [];
-        let novePoleTemp4 = [];
+        let teploty = {};
 
             data.list.forEach (den => {
-                let datum = new Date(den.dt * 1000).getDate();
-                    if(datum == dnes+1){
-                        novePoleTemp1.push(den.main.temp); 
-                    } else if(datum == dnes+2){
-                        //novePole.push(den.main.temp);
-                        novePoleTemp2.push(den.main.temp); 
-                    } else if(datum == dnes+3){
-                        //novePole.push(den.main.temp);
-                        novePoleTemp3.push(den.main.temp); 
-                    } else if(datum == dnes+4){
-                        //novePole.push(den.main.temp);
-                        novePoleTemp4.push(den.main.temp); 
-                    };
-            })
-    
-            let maxTemp1 = Math.max(...novePoleTemp1);
-            let maxTemp2 = Math.max(...novePoleTemp2);
-            let maxTemp3 = Math.max(...novePoleTemp3);
-            let maxTemp4 = Math.max(...novePoleTemp4);
-    
-            data.list.forEach (den => {
-                if(den.main.temp == maxTemp1){
-                    novePole.push(den);
-                } else if(den.main.temp == maxTemp2){
-                    novePole.push(den);
-                } else if(den.main.temp == maxTemp3){
-                    novePole.push(den);
-                } else if(den.main.temp == maxTemp4){
-                    novePole.push(den);
-                }
-            })    
+                let d = new Date(den.dt * 1000).getDate();
+                let m = new Date(den.dt * 1000).getMonth();
+                let datum = ('00' + m).slice(-2) + '/' + ('00' + d).slice(-2);
 
-        return novePole;         
+                teploty[datum] = Math.max(teploty[datum] || -Infinity, den.main.temp);
+            });
+    
+            console.log(teploty);
+
+        return teploty;         
     }
     
     displayForecast(data){
